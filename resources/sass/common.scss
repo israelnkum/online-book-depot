@@ -1,0 +1,26 @@
+.logo {
+    float: left;
+    width: 145px;
+    height: 31px;
+    margin: 0 24px 16px 0;
+}
+
+.logo-brand{
+    background: $primary !important;
+    color: #fff !important;
+    padding: 7px;
+    text-transform: uppercase;
+}
+.logo-brand-1{
+    border: solid 1px $primary !important;
+    color: $primary !important;
+    padding: 10px;
+    text-transform: uppercase;
+}
+.nav-bar{
+    background: #fff !important;
+    text-transform: uppercase !important;
+}
+.inputNumber {
+    width: 100% !important;
+}

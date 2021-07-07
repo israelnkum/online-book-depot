@@ -1,0 +1,7 @@
+export const Types = {
+    GET_SHOP: 'GET_SHOP',
+    UPDATE_SHOP: 'UPDATE_SHOP',
+    NEW_SHOP: 'NEW_SHOP',
+    ALL_SHOPS: 'ALL_SHOPS',
+    DELETE_SHOP: 'DELETE_SHOP',
+}

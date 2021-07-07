@@ -1,0 +1,8 @@
+export const Types = {
+    GET_ITEM: 'GET_ITEM',
+    UPDATE_ITEM: 'UPDATE_ITEM',
+    NEW_ITEM: 'NEW_ITEM',
+    ALL_ITEMS: 'ALL_ITEMS',
+    DELETE_ITEM: 'DELETE_ITEM',
+    ALL_TAGS: 'ALL_TAGS',
+}

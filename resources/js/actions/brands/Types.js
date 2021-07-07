@@ -1,0 +1,7 @@
+export const Types = {
+    GET_BRAND: 'GET_BRAND',
+    UPDATE_BRAND: 'UPDATE_BRAND',
+    NEW_BRAND: 'NEW_BRAND',
+    ALL_BRANDS: 'ALL_BRANDS',
+    DELETE_BRAND: 'DELETE_BRAND',
+}
