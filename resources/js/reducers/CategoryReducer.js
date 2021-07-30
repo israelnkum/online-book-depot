@@ -1,19 +1,26 @@
 import { Types } from '../actions/categories/Types'
 const initialState = {
     categoryDetail: {},
+    itemDetail: {},
+    categoryItems: [],
     categories: []
 }
 
-export default function shopReducer (state = initialState, action) {
+export default function categoryReducer (state = initialState, action) {
     switch (action.type) {
         case Types.GET_CATEGORY:
             return { ...state, categoryDetail: action.payload }
+
+       case Types.LANDING_ITEMS:
+            return { ...state, categoryItems: action.payload }
 
         case Types.NEW_CATEGORY:
             return {
                 ...state,
                 categories: state.categories.concat(action.payload)
             }
+        case Types.ITEM_DETAIL:
+            return { ...state, itemDetail: action.payload }
 
         case Types.ALL_CATEGORIES:
             return {

@@ -33,7 +33,7 @@ function AllItems(props) {
     }
     return (
         <>
-            <ItemForm tags={props.tags} categories={props.categories} shops={props.shops} brands={props.brands}  btnIcon={<PlusOutlined style={{ cursor: 'pointer' }}/>} btnText={'New Shop'}/>
+            <ItemForm tags={props.tags} categories={props.categories} shops={props.shops} brands={props.brands}  btnIcon={<PlusOutlined style={{ cursor: 'pointer' }}/>} btnText={'New Item'}/>
 
             <Table loading={loading} dataSource={props.items} scroll={{ x: 50 }} rowKey={'id'}>
                 <Column fixed={'left'} width={80} title="Avatar" render={(text, record) => (
@@ -45,8 +45,6 @@ function AllItems(props) {
                         render={(text, record) => (
                             <>
                                 <Typography.Text>{record.name}</Typography.Text>
-                                <br/>
-                                <Tag color={'blue'}>{record.brand.name}</Tag>
                             </>
                         )}/>
                 <Column title="Category" dataIndex={['category','name']}/>

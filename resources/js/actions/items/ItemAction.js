@@ -28,6 +28,19 @@ export const getAllItems = () => (dispatch) => {
         })
     })
 }
+export const getLandingItems = () => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        api().get(`/landing/items`).then((res) => {
+            dispatch({
+                type: Types.ALL_ITEMS,
+                payload: res.data
+            })
+            resolve(res)
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+}
 export const getAllTags = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         api().get(`/tags`).then((res) => {
@@ -44,11 +57,11 @@ export const getAllTags = () => (dispatch) => {
 
 export const editItem = (values) => (dispatch) => {
     return new Promise((resolve, reject) => {
-        api().put(`/items/${values.get(id)}`, values).then((res) => {
-            // dispatch({
-            //     type: Types.UPDATE_ITEM,
-            //     payload: res.data
-            // })
+        api().put(`/items/${values.id}`, values).then((res) => {
+            dispatch({
+                type: Types.UPDATE_ITEM,
+                payload: res.data
+            })
             resolve(res)
         }).catch((err) => {
             reject(err)

@@ -21,7 +21,7 @@ export default function Navigation(props) {
             <Row>
                 <Col xs={16} sm={16} md={8} lg={8} xl={8} xxl={8}>
                     <div className="logo" align={'right'}>
-                        <Typography.Text onClick={() =>  window.location.href="/"}   style={{ cursor: 'pointer' }}>
+                        <Typography.Text onClick={() =>  window.location.href="/"} style={{ cursor: 'pointer' }}>
                             <span className={'logo-brand-1'}>os</span><span className={'logo-brand'}>Shop</span>
                         </Typography.Text>
                     </div>
@@ -35,7 +35,7 @@ export default function Navigation(props) {
                         <Menu.Item key={'in'} >
                             <Input.Search style={{ verticalAlign: 'middle' }} placeholder={'Search'}/>
                         </Menu.Item>
-                        <Menu.Item key={'Home'} icon={<HomeOutlined />}>Home</Menu.Item>
+                        <Menu.Item onClick={() =>  window.location.href="/"}  key={'Home'} icon={<HomeOutlined />}>Home</Menu.Item>
                         <Menu.Item key={'Shop'} icon={<ShoppingOutlined />}>Shop</Menu.Item>
                         <Menu.Item key={'Cart'} icon={<ShoppingCartOutlined/>}>
                             Cart

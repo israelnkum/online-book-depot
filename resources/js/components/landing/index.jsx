@@ -3,9 +3,12 @@ import 'antd/dist/antd.css'
 import { enquireScreen } from 'enquire-js';
 import Banner from "./banner";
 import Navigation from "./navigation";
-import Categories from "./categories";
+import Index from "./categories";
 import {Divider, Menu} from "antd";
 import {UserOutlined} from "@ant-design/icons";
+import CategoryItems from '../category-items'
+import {Route, Switch} from "react-router-dom";
+import ItemDetail from "./item-detail";
 let isMobile;
 enquireScreen((b) => {
     isMobile = b;
@@ -34,9 +37,19 @@ function Landing() {
                     Account
                 </Menu.Item>
             </Navigation>
-            <Banner/>
-            <Divider/>
-            <Categories/>
+            <Switch>
+                <Route path={'/'} exact>
+                    <Banner/>
+                    <Divider/>
+                    <Index/>
+                </Route>
+                <Route path={'/landing/category/:name/:id/'} exact>
+                    <CategoryItems/>
+                </Route>
+                <Route path={'/landing/category/:name/:item/detail/:id'} exact>
+                    <ItemDetail/>
+                </Route>
+            </Switch>
         </>
     );
 }

@@ -34,6 +34,7 @@ class ItemResource extends JsonResource
             'userId' => $this->userId,
             'name' => $this->name,
             'description' => $this->description,
+            'tags' => $this->tags->pluck('id'),
             'file' => $this->photo->photoUrl,
             'qtyInStock' => $this->qtyInStock,
             'sellingPrice' => $this->sellingPrice,

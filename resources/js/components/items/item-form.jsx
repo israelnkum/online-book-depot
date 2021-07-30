@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import {Button, Form, Input, Row, Col, Space, message, Select, Drawer, InputNumber, Badge,} from 'antd';
+import {Button, Form, Input, Row, Col, Space, message, Select, Drawer, InputNumber, Avatar,} from 'antd';
 import {useDispatch} from "react-redux";
 import {addItem, editItem} from "../../actions/items/ItemAction";
 import ChangePicture from "./change-picture";
-import Avatar from "antd/es/avatar/avatar";
+
 export const ItemForm = (props) => {
     const [selectedFile, setSelectedFile] = useState(null)
     const dispatch = useDispatch()
@@ -40,12 +40,14 @@ export const ItemForm = (props) => {
             if (Object.prototype.hasOwnProperty.call(values, key)) { formData.append(key, values[key]) }
         }
 
-        dispatch(values.id === '0' ? addItem(formData) : editItem(formData)).then((res) => {
+        // console.log(formData)
+        dispatch(values.id === '0' ? addItem(formData) : editItem(values)).then((res) => {
             message.success('Item ' + (values.id === '0' ? 'Added' : 'Updated'))
             form.resetFields()
             onClose(false)
         }).catch((error) => {
-            message.warning(error.response.data)
+            console.log(error)
+            message.warning(error.response)
         })
 
     };
@@ -75,12 +77,15 @@ export const ItemForm = (props) => {
                     onFinishFailed={onFinishFailed}
                 >
                     <Row justify={'center'}>
-                        <Col span={4} xs={24} sm={24} md={4} lg={4}>
-                            <Avatar size={100} shape={'square'} src={'/storage/images/items/'+props.formValues.file}/>
-                        </Col>
-                        <Col span={4} xs={24} sm={24} md={4} lg={4}>
-                            <ChangePicture uploadProps={uploadProps}/>
-                        </Col>
+                        {
+                            props.formValues.id !== '0' ?
+                                <Col span={4} xs={24} sm={24} md={4} lg={4}>
+                                    <Avatar size={100} shape={'square'} src={'/storage/images/items/'+props.formValues.file}/>
+                                </Col>
+                                : <Col span={4} xs={24} sm={24} md={4} lg={4}>
+                                    <ChangePicture uploadProps={uploadProps}/>
+                                </Col>
+                        }
                     </Row>
                     <Row gutter={[5, 5]}>
                         <Col span={8} xs={8} sm={8} lg={8}>
@@ -186,7 +191,7 @@ export const ItemForm = (props) => {
                                 <InputNumber className={'inputNumber'}/>
                             </Form.Item>
                         </Col>
-                        <Col span={6} xs={6} sm={6} lg={6}>
+                        <Col span={24} xs={24} sm={24} lg={24}>
                             <Form.Item
                                 label="Tags"
                                 name="tags"
@@ -197,7 +202,7 @@ export const ItemForm = (props) => {
                                     },
                                 ]}
                             >
-                                <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode">
+                                <Select mode="multiple" style={{ width: '100%' }} placeholder="Tags Mode">
                                     {
                                         props.tags.map((tag) => {
                                             return <Select.Option key={tag.id} value={tag.id}>{tag.name}</Select.Option>
@@ -208,9 +213,9 @@ export const ItemForm = (props) => {
                         </Col>
                         <Col span={12} xs={24} sm={24} lg={12}>
                             <Form.Item
+                                hidden
                                 label="ID"
                                 name="id"
-                                hidden
                                 rules={[
                                     {
                                         required: true,

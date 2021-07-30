@@ -13,7 +13,6 @@ class Category extends Model
 {
     use HasFactory, UsesUuid, SoftDeletes;
     protected $fillable = [
-        'shopId',
         'name',
     ];
 

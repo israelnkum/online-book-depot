@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressBookController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -34,6 +35,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('brands', BrandController::class);
 
     Route::get('/tags', [ItemController::class, 'getAllTags']);
+});
+
+Route::prefix('landing')->group(function () {
+    Route::get('/items', [LandingPageController::class, 'getAllItems']);
+    Route::get('/categories', [LandingPageController::class, 'getAllCategories']);
+    Route::prefix('/category')->group(function () {
+        Route::get('/items/{id}', [LandingPageController::class, 'getCategoryItems']);
+        Route::get('/item/{id}/detail', [LandingPageController::class, 'getItemDetail']);
+    });
 });
 
 Route::middleware('auth:api')->get('/customer', function (Request $request) {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ItemResource;
+use App\Http\Resources\LandingItemResource;
 use App\Models\Item;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
@@ -20,11 +20,11 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse|Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return response()->json(ItemResource::collection(Item::all()));
+        return response()->json(LandingItemResource::collection(Item::all()));
     }
 
     /**
@@ -43,9 +43,8 @@ class ItemController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
-
         if (Item::query()->where('name', $request->name)->where('shopId', $request->shopId)->exists()) {
             return response('Item name already exist',422);
         }
@@ -60,15 +59,13 @@ class ItemController extends Controller
                 ]);
             }
             if ($request->has('tags')){
-                foreach ($request->tags as $tag){
-                    $t = Tag::query()->find($tag);
-                    $item->tags()->attache($t);
+                $tags = explode(',',$request->tags);
+                foreach ($tags as $tag){
+                    $item->tags()->attach($tag);
                 }
             }
-//            $role = Role::query()->where('name', 'Customer')->first();
-//            $user->roles()->attach($role);
             DB::commit();
-            return \response(new ItemResource($item));
+            return \response(new LandingItemResource($item));
         }catch (\Exception $exception){
             DB::rollBack();
             return \response($exception->getMessage(), 422);
@@ -102,19 +99,13 @@ class ItemController extends Controller
      *
      * @param Request $request
      * @param string $id
-     * @return Response
      */
-    public function update(Request $request, string $id): Response
+    public function update(Request $request, $id)
     {
-        if ($request->has('file') && $request->file != "null"){
-          return \response('ee');
-        }else{
-            return \response('333333');
-        }
         DB::beginTransaction();
         try
         {
-            $item= Item::query()->find($id);
+            $item= Item::find($id);
             $item->update($request->all());
 
             if ($request->has('file') && $request->file != "null"){
@@ -124,14 +115,17 @@ class ItemController extends Controller
                 ]);
             }
 
+            if ($request->has('tags')){
+                $item->tags()->sync($request->tags);
+            }
+
             DB::commit();
 
-//            $item = Item::query()->find($id);
-            return \response(new ItemResource($item));
+            return \response(new LandingItemResource($item));
 
         }catch (\Exception $exception){
             DB::rollBack();
-            return response('Something went wrong', 422);
+            return response($exception->getMessage(), 422);
         }
     }
 
@@ -147,7 +141,7 @@ class ItemController extends Controller
         try {
             Item::query()->find($id)->delete();
             DB::commit();
-            return \response(new ItemResource(Item::withTrashed()->find($id)));
+            return \response(new LandingItemResource(Item::withTrashed()->find($id)));
         }catch (\Exception $exception){
             DB::rollBack();
             return response('Something went wrong',422);

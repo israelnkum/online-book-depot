@@ -6,9 +6,6 @@
 
 import ReactDOM from "react-dom";
 import React from 'react'
-// import { Provider } from 'react-redux'
-// import { PersistGate } from 'redux-persist/integration/react'
-// import { Store, persistor } from './utils/store'
 require('./bootstrap');
 
 /**
@@ -18,16 +15,19 @@ require('./bootstrap');
  */
 import Landing from "./components/landing";
 import {BrowserRouter as Router} from "react-router-dom";
+import {PersistGate} from "redux-persist/integration/react";
+import {Provider} from "react-redux";
+import {Store, persistor} from "./utils/store";
 
 if (document.getElementById('lading-page')) {
     ReactDOM.render(
-        // <Provider store={Store}>
-        //     <PersistGate persistor={persistor}>
+        <Provider store={Store}>
+            <PersistGate persistor={persistor}>
                 <Router>
                     <Landing/>
-                </Router>,
-            // </PersistGate>
-        // </Provider>,
+                </Router>
+            </PersistGate>
+        </Provider>,
         document.getElementById('lading-page')
     )
 }

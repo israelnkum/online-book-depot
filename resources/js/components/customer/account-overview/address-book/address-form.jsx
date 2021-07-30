@@ -100,12 +100,6 @@ export const AddressForm = (props) => {
                             <Form.Item
                                 label="Other Phone Number"
                                 name="phoneNumberAlt"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
-                                ]}
                             >
                                 <Input />
                             </Form.Item>

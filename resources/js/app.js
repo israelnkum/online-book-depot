@@ -24,7 +24,7 @@ if (document.getElementById('root')) {
         <Provider store={Store}>
             <PersistGate persistor={persistor}>
                 <Router>
-                <Dashboard/>
+                    <Dashboard/>
                 </Router>
             </PersistGate>
         </Provider>,
