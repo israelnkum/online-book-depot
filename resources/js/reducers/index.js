@@ -9,6 +9,7 @@ import brandReducer from './BrandReducer'
 import cartReducer from './CartReducer'
 import pickupStationReducer from './PickupStationReducer'
 import ordersReducer from './OrderReducer'
+import usersReducer from './UsersReducer'
 
 const persistConfig = {
   key: 'root',
@@ -21,7 +22,8 @@ const persistConfig = {
     'brandReducer',
     'cartReducer',
     'pickupStationReducer',
-    'ordersReducer'
+    'ordersReducer',
+    'usersReducer'
   ]
 }
 
@@ -33,7 +35,8 @@ const rootReducer = combineReducers({
   brandReducer,
   cartReducer,
   pickupStationReducer,
-  ordersReducer
+  ordersReducer,
+  usersReducer
 })
 
 export default persistReducer(persistConfig, rootReducer)

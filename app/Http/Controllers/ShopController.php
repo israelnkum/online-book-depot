@@ -43,6 +43,7 @@ class ShopController extends Controller
      */
     public function store(Request $request): Response
     {
+        // checking if there is any store with the same name
         if (Shop::query()->where('name', $request->name)->exists()) {
             return response('Shop name already exist',422);
         }

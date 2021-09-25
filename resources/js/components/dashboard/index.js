@@ -15,6 +15,7 @@ import { getAuthUser } from '../../actions/user/UserAction'
 import { Spin } from 'antd'
 import ChangePassword from '../change-password'
 import Orders from '../orders'
+import Users from '../users'
 
 const Dashboard = (props) => {
   const { handleGetAuthUser, role } = props
@@ -54,6 +55,8 @@ const Dashboard = (props) => {
                                     <Route path={'/tag-categories'} exact component={TagsAndCategories}/>
                                     <Route path={'/items'} exact component={Items}/>
                                     <Route path={'/pickup-stations'} component={PickupStation}/>
+                                    <Route path={'/users/customers'} component={Users}/>
+                                    <Route path={'/users/admins'} component={Users}/>
                                 </Switch>
                             }
                         </Main>

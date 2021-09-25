@@ -3,7 +3,14 @@ import 'antd/dist/antd.css'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { UserOutlined, GiftOutlined, ReadOutlined, LockOutlined, ShopOutlined } from '@ant-design/icons'
+import {
+  UserOutlined,
+  GiftOutlined,
+  ReadOutlined,
+  LockOutlined,
+  ShopOutlined,
+  UsergroupAddOutlined
+} from '@ant-design/icons'
 import { connect } from 'react-redux'
 
 const SideNav = (props) => {
@@ -40,12 +47,12 @@ const SideNav = (props) => {
                         <Menu.Item key="pickup-stations" icon={<ShopOutlined />}>
                             <Link to={'/pickup-stations'}>Pickup Stations</Link>
                         </Menu.Item>
-                        <Menu.SubMenu key="users" icon={<UserOutlined />} title="Users">
+                        <Menu.SubMenu key="users" icon={<UsergroupAddOutlined />} title="Users">
                             <Menu.Item key="customers" icon={<UserOutlined />}>
-                                <Link to={'/orders'}>Customers</Link>
+                                <Link to={'/users/customers'}>Customers</Link>
                             </Menu.Item>
                             <Menu.Item key="admins" icon={<UserOutlined />}>
-                                <Link to={'/orders/all'}>Admins</Link>
+                                <Link to={'/users/admins'}>Admins</Link>
                             </Menu.Item>
                         </Menu.SubMenu>
                     </>

@@ -31,6 +31,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::resource('address', AddressBookController::class);
     });
 
+    Route::prefix('users')->group(function () {
+        Route::get('/customers', [UserController::class, 'customers']);
+        Route::get('/admins', [UserController::class, 'admins']);
+    });
     Route::resource('users', UserController::class);
 
     Route::prefix('user')->group(function () {

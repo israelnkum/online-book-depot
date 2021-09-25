@@ -6,6 +6,8 @@ use App\Helpers\HelperFunctions;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -28,32 +30,28 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return JsonResponse
      */
-    public function index()
+    public function customers(): JsonResponse
     {
-        //
+        $customers = User::query()->whereHas('roles', function ($query){
+            $query->where('name', 'Customer');
+        })->get();
+        return response()->json(UserResource::collection($customers));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function admins(): JsonResponse
     {
-        //
+        $admins = User::query()->whereHas('roles', function ($query){
+           $query->where('name', 'Admin');
+        })->get();
+        return response()->json(UserResource::collection($admins));
     }
 
 
@@ -63,16 +61,6 @@ class UserController extends Controller
         return response(new UserResource($user));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -106,17 +94,6 @@ class UserController extends Controller
         ]);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
     /**
      * @param Request $request
@@ -175,9 +152,9 @@ class UserController extends Controller
             $paymentLink = HelperFunctions::initiatePayment($data);
 
             DB::commit();
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             DB::rollBack();
-            return \response('Sorry! Something went wrong, Please try again', 400);
+            return response('Sorry! Something went wrong, Please try again', 400);
         }
     }
 
