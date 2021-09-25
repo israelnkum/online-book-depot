@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\HelperFunctions;
 use App\Http\Resources\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -16,7 +17,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Validation\ValidationException;
 use function response;
 
@@ -62,6 +65,30 @@ class UserController extends Controller
     }
 
 
+
+    public function store(Request $request){
+        if (User::query()->where('phoneNumber', $request->phoneNumber)->exists()) {
+            return response('Phone Number is already',422);
+        }
+        if (User::query()->where('email', $request->email)->exists()) {
+            return response('Email is already',422);
+        }
+        DB::beginTransaction();
+        try {
+            $request['password'] = Hash::make($request->password);
+            $user =  User::create($request->all());
+            $role = Role::query()->where('name', 'Admin')->first();
+            $user->roles()->attach($role);
+            DB::commit();
+
+            return response()->json(new UserResource($user));
+        }catch (\Exception $exception){
+            DB::rollBack();
+
+            return response($exception->getMessage(), 422);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -69,7 +96,7 @@ class UserController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): Response
     {
         DB::beginTransaction();
         try {
@@ -158,4 +185,17 @@ class UserController extends Controller
         }
     }
 
+
+    public function destroy(string $id): Response
+    {
+        DB::beginTransaction();
+        try {
+            User::query()->find($id)->delete();
+            DB::commit();
+            return \response(new UserResource(User::withTrashed()->find($id)));
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return response('Something went wrong',422);
+        }
+    }
 }

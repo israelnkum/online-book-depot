@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Card, Spin, Typography } from 'antd'
-import { EditOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons'
+import { LockOutlined, UserOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons'
 import { EditDetails } from './edit-details'
 import { Link } from 'react-router-dom'
 
