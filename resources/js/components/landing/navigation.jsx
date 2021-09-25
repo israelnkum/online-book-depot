@@ -1,27 +1,24 @@
-import React from 'react';
-import {Layout, Col, Input, Menu, Row, Space, Button, Typography} from "antd";
+import React from 'react'
+import { Layout, Col, Input, Menu, Row, Space, Typography, Badge, Avatar } from 'antd'
 import PropTypes from 'prop-types'
-const { Header } = Layout
 import {
-    MenuOutlined,
-    ShoppingCartOutlined,
-    SearchOutlined,
-    UserOutlined,
-    HomeOutlined,
-    ShoppingOutlined
-} from "@ant-design/icons";
+  MenuOutlined,
+  ShoppingCartOutlined,
+  HomeOutlined,
+  ShoppingOutlined
+} from '@ant-design/icons'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+const { Header } = Layout
 
-export default function Navigation(props) {
-    // const suffix = (
-    //     <Button type={'default'} size={'small'} ghost icon={<SearchOutlined/>}/>
-    // );
-
-    return (
+const Navigation = (props) => {
+  const { totalCartItems } = props
+  return (
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }} className={'nav-bar'}>
             <Row>
                 <Col xs={16} sm={16} md={8} lg={8} xl={8} xxl={8}>
                     <div className="logo" align={'right'}>
-                        <Typography.Text onClick={() =>  window.location.href="/"} style={{ cursor: 'pointer' }}>
+                        <Typography.Text onClick={() => { window.location.href = '/' }} style={{ cursor: 'pointer' }}>
                             <span className={'logo-brand-1'}>os</span><span className={'logo-brand'}>Shop</span>
                         </Typography.Text>
                     </div>
@@ -35,19 +32,33 @@ export default function Navigation(props) {
                         <Menu.Item key={'in'} >
                             <Input.Search style={{ verticalAlign: 'middle' }} placeholder={'Search'}/>
                         </Menu.Item>
-                        <Menu.Item onClick={() =>  window.location.href="/"}  key={'Home'} icon={<HomeOutlined />}>Home</Menu.Item>
-                        <Menu.Item key={'Shop'} icon={<ShoppingOutlined />}>Shop</Menu.Item>
-                        <Menu.Item key={'Cart'} icon={<ShoppingCartOutlined/>}>
-                            Cart
+                        <Menu.Item onClick={() => { window.location.href = '/' }} key={'Home'} icon={<HomeOutlined />}>Home</Menu.Item>
+                        <Menu.Item key={'Shop'} icon={<ShoppingOutlined />}>
+                            <Link style={{ color: '#f56a00' }} to={'/landing/shop'}>Shop</Link>
+                        </Menu.Item>
+                        <Menu.Item key={'Cart'}>
+                            <Link to={'/landing/cart'}>
+                                <Badge showZero count={totalCartItems}>
+                                    <Avatar style={{ backgroundColor: '#f56a00' }} icon={<ShoppingCartOutlined/>} shape="square"/>
+                                </Badge>
+                            </Link>
                         </Menu.Item>
                         {props.children}
                     </Menu>
                 </Col>
             </Row>
         </Header>
-    )
+  )
 }
 
 Navigation.propTypes = {
-    children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  totalCartItems: PropTypes.number.isRequired
 }
+
+const mapStateToProps = (state) => {
+  return {
+    totalCartItems: state.cartReducer.cartItems.reduce(function (acc, val) { return acc + val.qty }, 0)
+  }
+}
+export default connect(mapStateToProps)(Navigation)

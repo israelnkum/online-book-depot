@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\HelperFunctions as Helper;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ShopResource;
 use App\Models\Category;
-use App\Models\Shop;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -51,6 +51,12 @@ class CategoryController extends Controller
         DB::beginTransaction();
         try {
             $category = Category::query()->create($request->all());
+            if ($request->has('file') && $request->file != "null"){
+                $image_name = Helper::saveImage($request, 'categories');
+                $category->photo()->updateOrCreate([
+                    'photoUrl'=> $image_name
+                ]);
+            }
             DB::commit();
             return \response(new CategoryResource($category));
         }catch (\Exception $exception){
@@ -93,7 +99,14 @@ class CategoryController extends Controller
         DB::beginTransaction();
         try
         {
-            Category::query()->find($id)->update($request->all());
+            $category = Category::query()->find($id);
+            $category->update($request->all());
+            if ($request->has('file') && $request->file != "null"){
+                $image_name = Helper::saveImage($request, 'categories');
+                $category->photo()->updateOrCreate([
+                    'photoUrl'=> $image_name
+                ]);
+            }
             DB::commit();
 
             $category = Category::query()->find($id);

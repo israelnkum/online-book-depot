@@ -28,5 +28,6 @@ class AddressBook extends Model
         'additionalInfo',
         'region',
         'city',
+        'default'
     ];
 }

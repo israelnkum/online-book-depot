@@ -26,6 +26,7 @@ class AddressBookResource extends JsonResource
             'additionalInfo' => $this->additionalInfo,
             'region' => $this->region,
             'city' => $this->city,
+            'default' => $this->default,
         ];
     }
 }

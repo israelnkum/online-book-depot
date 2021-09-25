@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row d-flex justify-content-center align-items-center">
+<div class="container pt-5">
+    <div class="row d-flex justify-content-center align-items-center pt-5">
         <div class="col-md-4">
             <div class="card" style="border-radius: 0;  border-bottom: solid #ff5300 2px;">
                 <div class="card-header text-center border-0  bg-white">

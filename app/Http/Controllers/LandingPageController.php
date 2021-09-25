@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ItemResource;
+use App\Http\Resources\TagResource;
 use App\Http\Resources\LandingItemResource;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 
 class LandingPageController extends Controller
@@ -32,9 +34,18 @@ class LandingPageController extends Controller
         return response()->json(LandingItemResource::collection($items));
     }
 
+    /**
+     * @param $itemId
+     * @return JsonResponse
+     */
     public function getItemDetail($itemId): JsonResponse
     {
         $item = Item::find($itemId);
         return response()->json(new ItemResource($item));
+    }
+
+    public function getItemByTags(){
+//        return Tag::first()->items;
+        return response()->json(TagResource::collection(Tag::all()));
     }
 }

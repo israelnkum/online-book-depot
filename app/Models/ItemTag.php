@@ -22,5 +22,5 @@ class ItemTag extends Model
         return $this->belongsTo(Tag::class, 'tagId');
     }
 
-    protected $fillable = [ 'roleId', 'userId'];
+    protected $fillable = [ 'itemId', 'tagId'];
 }

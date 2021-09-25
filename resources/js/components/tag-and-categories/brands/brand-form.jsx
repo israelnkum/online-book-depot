@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {Modal, Button, Form, Input, Row, Col, Space, message, Select,} from 'antd';
-import {useDispatch} from "react-redux";
-import {addBrand, editBrand} from "../../../actions/brands/BrandAction";
+import { Modal, Button, Form, Input, Row, Col, Space, message, Select } from 'antd'
+import { useDispatch } from 'react-redux'
+import { addBrand, editBrand } from '../../../actions/brands/BrandAction'
 
 export const BrandForm = (props) => {
-    const dispatch = useDispatch()
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [form] = Form.useForm()
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
+  const dispatch = useDispatch()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [form] = Form.useForm()
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
 
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
+  const handleOk = () => {
+    setIsModalVisible(false)
+  }
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
+  const handleCancel = () => {
+    setIsModalVisible(false)
+  }
 
-    const onFinish = (values) => {
-        dispatch(values.id === '0' ? addBrand(values) : editBrand(values)).then((res) => {
-            message.success('Brand ' + (values.id === '0' ? 'Created' :'Updated'))
-            form.resetFields()
-            handleOk(false)
-        }).catch((error) => {
-            message.warning(error.response.data)
-        })
-    };
+  const onFinish = (values) => {
+    dispatch(values.id === '0' ? addBrand(values) : editBrand(values)).then((res) => {
+      message.success('Brand ' + (values.id === '0' ? 'Created' : 'Updated'))
+      form.resetFields()
+      handleOk(false)
+    }).catch((error) => {
+      message.warning(error.response.data)
+    })
+  }
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
 
-    return (
+  return (
         <>
             <Button size={'small'} onClick={showModal} icon={props.btnIcon}>
                 {props.btnText}
             </Button>
-            <Modal title="Edit Category"
+            <Modal title="New Brand"
                    width={290}
                    visible={isModalVisible}
                    footer={null}
@@ -59,10 +59,10 @@ export const BrandForm = (props) => {
                                 label="Brand Name"
                                 name="name"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -74,10 +74,10 @@ export const BrandForm = (props) => {
                                 name="id"
                                 hidden
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -97,10 +97,10 @@ export const BrandForm = (props) => {
                 </Form>
             </Modal>
         </>
-    );
+  )
 }
 BrandForm.propTypes = {
-    formValues : PropTypes.object.isRequired,
-    btnText : PropTypes.string,
-    icon : PropTypes.node
+  formValues: PropTypes.object.isRequired,
+  btnText: PropTypes.string,
+  icon: PropTypes.node
 }

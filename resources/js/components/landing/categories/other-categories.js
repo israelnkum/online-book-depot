@@ -4,6 +4,7 @@ import {Card, Typography, List, Spin} from "antd"
 import {useDispatch} from "react-redux"
 import {getLandingCategories} from "../../../actions/categories/CategoryAction"
 import {Link} from "react-router-dom"
+import CategoryLink from "./category-link";
 export default function OtherCategories(props) {
     const [loadCategories, setLoadCategories] = useState(true)
     const state = store.getState()
@@ -25,12 +26,12 @@ export default function OtherCategories(props) {
                             .sort()
                             .filter((cat) => cat.name !== props.name)
                             .map((category) => (
-                                <Link  key={category.id} to={`/landing/category/${category.name}/${category.id}`}>
+                                <CategoryLink key={category.id} name={category.name} id={category.id}>
                                     <List.Item>
                                         <Typography.Text>{category.name}</Typography.Text>
                                         <div>{category.items}</div>
                                     </List.Item>
-                                </Link>
+                                </CategoryLink>
                             ))
                     }
                 </List>

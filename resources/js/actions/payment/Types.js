@@ -1,0 +1,4 @@
+export const Types = {
+  CREATE_ORDER: 'CREATE_ORDER',
+  MAKE_PAYMENT: 'MAKE_PAYMENT'
+}

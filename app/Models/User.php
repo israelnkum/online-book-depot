@@ -13,6 +13,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property string $password
+ * @property string email
+ * @property string name
+ * @property string phoneNumber
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, UsesUuid,SoftDeletes;
@@ -67,5 +73,10 @@ class User extends Authenticatable
     public function addressBooks(): HasMany
     {
         return $this->hasMany(AddressBook::class, 'userId');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'customerId');
     }
 }

@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require('laravel-mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -12,9 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .react()
-    .sass('resources/sass/app.scss', 'public/css')
+  .react()
+  .sass('resources/sass/app.scss', 'public/css')
 mix.browserSync('127.0.0.1:8000')
 mix.js('resources/js/landing.js', 'public/js')
-    .react()
-    .sass('resources/sass/app-landing.scss', 'public/css');
+  .react()
+  .sass('resources/sass/app-landing.scss', 'public/css')

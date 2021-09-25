@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {Button, Card,  Spin, Typography} from "antd";
-import {EditOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined} from '@ant-design/icons';
-import { EditDetails } from "./edit-details";
+import { Button, Card, Spin, Typography } from 'antd'
+import { EditOutlined, LockOutlined, UserOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons'
+import { EditDetails } from './edit-details'
+import { Link } from 'react-router-dom'
 
-export default function Index(props) {
-    const [ editing, setEditing ] = useState(false)
-    return (
+export default function Index (props) {
+  const [editing, setEditing] = useState(false)
+  return (
         <Spin spinning={props.loading}>
             <Card
                 title={'Account Details'}
@@ -15,9 +16,11 @@ export default function Index(props) {
                     <EditDetails formValues={props.userDetail}/>
                 }
                 actions={[
-                    <Button type={'default'} icon={<LockOutlined key="change-password" />}>
-                        Change Password
-                    </Button>,
+                    <Link key={'change-password'} to={'/change-password'}>
+                        <Button type={'default'} icon={<LockOutlined key="change-password" />}>
+                            Change Password
+                        </Button>
+                    </Link>
                 ]}>
                 {
                     props.loading === false &&
@@ -35,10 +38,9 @@ export default function Index(props) {
                 }
             </Card>
         </Spin>
-    );
+  )
 }
 Index.propTypes = {
-    userDetail: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
+  userDetail: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 }
-

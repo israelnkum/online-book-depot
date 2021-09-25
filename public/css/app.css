@@ -10031,3 +10031,7 @@ h3 {
 .inputNumber {
   width: 100% !important;
 }
+
+.text-primary {
+  color: #ff5300 !important;
+}

@@ -1,47 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {Modal, Button, Form, Input, Row, Col, Space, message, Select,} from 'antd';
-import {EditOutlined, PlusOutlined} from "@ant-design/icons";
-import {useDispatch} from "react-redux";
-import {addAddressBook, editAddress} from "../../actions/user/UserAction";
-import {addShop, editShop} from "../../actions/shop/ShopAction";
+import { Modal, Button, Form, Input, Row, Col, Space, message, Select } from 'antd'
+import { EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { useDispatch } from 'react-redux'
+import { addAddressBook, editAddress } from '../../actions/user/UserAction'
+import { addShop, editShop } from '../../actions/shop/ShopAction'
 
 export const ShopForm = (props) => {
-    const dispatch = useDispatch()
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [form] = Form.useForm()
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
+  const dispatch = useDispatch()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [form] = Form.useForm()
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
 
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
+  const handleOk = () => {
+    setIsModalVisible(false)
+  }
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
+  const handleCancel = () => {
+    setIsModalVisible(false)
+  }
 
-    const onFinish = (values) => {
-        dispatch(values.id === '0' ? addShop(values) : editShop(values)).then((res) => {
-            message.success('Shop ' + (values.id === '0' ? 'Added' : 'Updated'))
-            form.resetFields()
-            handleOk(false)
-        }).catch((error) => {
-            message.warning(error.response.data)
-        })
-    };
+  const onFinish = (values) => {
+    dispatch(values.id === '0' ? addShop(values) : editShop(values)).then((res) => {
+      message.success('Shop ' + (values.id === '0' ? 'Added' : 'Updated'))
+      form.resetFields()
+      handleOk(false)
+    }).catch((error) => {
+      message.warning(error.response.data)
+    })
+  }
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
 
-    return (
+  return (
         <>
             <Button size={'small'} onClick={showModal} icon={props.btnIcon}>
                 {props.btnText}
             </Button>
-            <Modal title="Address"
+            <Modal title="New Shop"
                    visible={isModalVisible}
                    footer={null}
                    onOk={handleOk}
@@ -60,10 +60,10 @@ export const ShopForm = (props) => {
                                 label="Shop Name"
                                 name="name"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -74,10 +74,10 @@ export const ShopForm = (props) => {
                                 label="Phone Number"
                                 name="contactNumber"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -95,10 +95,10 @@ export const ShopForm = (props) => {
                                 name="id"
                                 hidden
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -109,10 +109,10 @@ export const ShopForm = (props) => {
                                 label="Email"
                                 name="email"
                                 rules={[
-                                    {
-                                        type: 'email',
-                                        message: 'Not a valid mail'
-                                    },
+                                  {
+                                    type: 'email',
+                                    message: 'Not a valid mail'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -148,12 +148,11 @@ export const ShopForm = (props) => {
                 </Form>
             </Modal>
         </>
-    );
+  )
 }
 
-
 ShopForm.propTypes = {
-    formValues : PropTypes.object.isRequired,
-    btnIcon : PropTypes.node.isRequired,
-    btnText : PropTypes.string,
+  formValues: PropTypes.object.isRequired,
+  btnIcon: PropTypes.node.isRequired,
+  btnText: PropTypes.string
 }

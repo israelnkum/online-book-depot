@@ -10,14 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tag extends Model
 {
-    use HasFactory, UsesUuid,SoftDeletes;
+    use HasFactory, UsesUuid, SoftDeletes;
     protected $fillable =[
         'name'
     ];
 
     public function items(): BelongsToMany
     {
-        return $this->belongsToMany(Item::class,'item_tags','itemId');
+        return $this->belongsToMany(Item::class,'item_tags','tagId', 'itemId');
     }
+
 
 }

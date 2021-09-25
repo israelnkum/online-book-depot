@@ -18,8 +18,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .login-body {
+            background: url('{{asset('/storage/assets/login-bg.jpg ')}}') center center no-repeat;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
+<body class="login-body">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm text-uppercase">
             <div class="container">

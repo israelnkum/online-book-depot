@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemResource;
 use App\Http\Resources\LandingItemResource;
 use App\Models\Item;
 use App\Models\Tag;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\HelperFunctions as Helper;
 
 class ItemController extends Controller
 {
@@ -24,7 +26,7 @@ class ItemController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(LandingItemResource::collection(Item::all()));
+        return response()->json(ItemResource::collection(Item::all()));
     }
 
     /**
@@ -53,7 +55,7 @@ class ItemController extends Controller
             $request['userId'] = Auth::user()->id;
             $item = Item::query()->create($request->all());
             if ($request->has('file') && $request->file != "null"){
-                $image_name = self::saveImage($request);
+                $image_name = Helper::saveImage($request, 'items');
                 $item->photo()->updateOrCreate([
                     'photoUrl'=> $image_name
                 ]);
@@ -146,14 +148,6 @@ class ItemController extends Controller
             DB::rollBack();
             return response('Something went wrong',422);
         }
-    }
-
-
-    function saveImage(Request $request): string
-    {
-        $image_name = uniqid().'.'. $request->file('file')->getClientOriginalExtension();
-        $request->file('file')->storeAs(env('APP_PHOTO_PATH').'/items/', $image_name);
-        return $image_name;
     }
 
 

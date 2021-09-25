@@ -1,46 +1,48 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {Modal, Button, Form, Input, Row, Col, Space, message, Select, List,} from 'antd';
-import {EditOutlined, PlusOutlined} from "@ant-design/icons";
-import {useDispatch} from "react-redux";
-import {addAddressBook, getAllAddress, updateUser} from "../../../../actions/user/UserAction";
-import {AddressForm} from "./address-form";
-
-export const AllAddresses = (props) => {
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getAllAddress()).then((res) => {
-
-        })
-    }, [])
-    return (
-        <>
-            <List
-                itemLayout="horizontal"
-                dataSource={props.addressBook}
-                renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                            title={item.name}
-                            description={
-                                <>
-                                    {item.address} <br/>
-                                    {item.city + ',' +item.region} <br/>
-                                    {item.phoneNumber + '/' +item.phoneNumberAlt}
-                                </>
-                            }
-                        />
-                        <AddressForm
-                            btnIcon={<EditOutlined  style={{ cursor: 'pointer' }}/>}
-                            formValues={item}/>
-                    </List.Item>
-                )}
-            />
-        </>
-    );
+import { List } from 'antd'
+import { connect, useDispatch } from 'react-redux'
+import { getAllAddress } from '../../../../actions/user/UserAction'
+import { AddressItem } from './address-item'
+import { AddressForm } from './address-form'
+import { EditOutlined } from '@ant-design/icons'
+const AllAddresses = (props) => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllAddress())
+  }, [])
+  return (
+      <List
+          itemLayout="horizontal"
+          dataSource={props.addressBook}
+          renderItem={item => (
+              <AddressItem addressObj={item}
+                           action={
+                               <AddressForm
+                                   btnIcon={<EditOutlined style={{ cursor: 'pointer' }}/>}
+                                   formValues={item}/>
+                           }
+              />
+          )}
+      />
+  )
 }
-
 
 AllAddresses.propTypes = {
-    addressBook : PropTypes.array.isRequired
+  addressBook: PropTypes.array.isRequired,
+  myPickupLocation: PropTypes.func
 }
+
+const mapStateToProps = (state) => {
+  return {
+    addressBook: state.userReducer.addressBook
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAllAddress: () => dispatch(getAllAddress())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllAddresses)

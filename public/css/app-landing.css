@@ -38,6 +38,10 @@ body {
   width: 100% !important;
 }
 
+.text-primary {
+  color: #ff5300 !important;
+}
+
 .banner-anim-arrow-default {
   position: absolute;
   width: 60px !important;

@@ -9,6 +9,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AddressBookController extends Controller
@@ -24,7 +25,8 @@ class AddressBookController extends Controller
      */
     public function index()
     {
-        return response()->json(AddressBookResource::collection(AddressBook::all()));
+        $addresses = Auth::user()->addressBooks;
+        return response()->json(AddressBookResource::collection($addresses));
     }
 
     /**

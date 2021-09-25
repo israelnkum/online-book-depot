@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {Modal, Button, Form, Input, Row, Col, Space, message, Select,} from 'antd';
-import {EditOutlined, PlusOutlined} from "@ant-design/icons";
-import {useDispatch} from "react-redux";
-import {addAddressBook, editAddress, updateUser} from "../../../../actions/user/UserAction";
-import {regions} from "../../../../utils";
+import { Modal, Button, Form, Input, Row, Col, Space, message, Select, Checkbox } from 'antd'
+import { useDispatch } from 'react-redux'
+import { addAddressBook, editAddress } from '../../../../actions/user/UserAction'
+import { regions } from '../../../../utils'
 
 export const AddressForm = (props) => {
-    const dispatch = useDispatch()
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [form] = Form.useForm()
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
+  const dispatch = useDispatch()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [form] = Form.useForm()
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
 
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
+  const handleOk = () => {
+    setIsModalVisible(false)
+  }
 
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
+  const handleCancel = () => {
+    setIsModalVisible(false)
+  }
 
-    const onFinish = (values) => {
-        dispatch(values.id === '0' ? addAddressBook(values) : editAddress(values)).then((res) => {
-            message.success('Address ' + (values.id === '0' ? 'Created' : 'Updated'))
-            form.resetFields()
-            handleOk(false)
-        }).catch((error) => {
-            message.warning(error)
-        })
+  const onFinish = (values) => {
+    dispatch(values.id === '0' ? addAddressBook(values) : editAddress(values)).then((res) => {
+      message.success('Address ' + (values.id === '0' ? 'Created' : 'Updated'))
+      form.resetFields()
+      handleOk(false)
+    }).catch((error) => {
+      message.warning(error.response.data)
+    })
+  }
 
-    };
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
-    return (
+  return (
         <>
             <Button onClick={showModal} icon={props.btnIcon} type={'text'}/>
             <Modal title="Address"
@@ -59,10 +57,10 @@ export const AddressForm = (props) => {
                                 label="Surname"
                                 name="surName"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -73,10 +71,10 @@ export const AddressForm = (props) => {
                                 label="Other Names"
                                 name="otherNames"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -87,10 +85,10 @@ export const AddressForm = (props) => {
                                 label="Phone Number"
                                 name="phoneNumber"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -108,10 +106,10 @@ export const AddressForm = (props) => {
                                 name="id"
                                 hidden
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -121,10 +119,10 @@ export const AddressForm = (props) => {
                                 name="userId"
                                 hidden
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -135,11 +133,11 @@ export const AddressForm = (props) => {
                                 <Select placeholder="Select Region" allowClear showSearch>
                                     {
                                         regions.map((region) => {
-                                            return (
+                                          return (
                                                 <Select.Option key={region} value={region}>
                                                     {region}
                                                 </Select.Option>
-                                            )
+                                          )
                                         })
                                     }
                                 </Select>
@@ -150,10 +148,10 @@ export const AddressForm = (props) => {
                                 label="City"
                                 name="city"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input />
@@ -164,10 +162,10 @@ export const AddressForm = (props) => {
                                 name={'address'}
                                 label="Address"
                                 rules={[
-                                    {
-                                        required: true,
-                                        message: 'Required',
-                                    },
+                                  {
+                                    required: true,
+                                    message: 'Required'
+                                  }
                                 ]}
                             >
                                 <Input.TextArea />
@@ -179,6 +177,12 @@ export const AddressForm = (props) => {
                                 label="Additional Info"
                             >
                                 <Input.TextArea />
+                            </Form.Item>
+                        </Col>
+
+                        <Col span={24}>
+                            <Form.Item valuePropName="checked" name="default">
+                                <Checkbox>Set as default address</Checkbox>
                             </Form.Item>
                         </Col>
                         <Col span={12} xs={24} sm={24} lg={12}>
@@ -195,11 +199,16 @@ export const AddressForm = (props) => {
                 </Form>
             </Modal>
         </>
-    );
+  )
 }
 
-
 AddressForm.propTypes = {
-    formValues : PropTypes.object.isRequired,
-    btnIcon : PropTypes.node.isRequired,
+  formValues: PropTypes.object.isRequired,
+  btnIcon: PropTypes.node.isRequired
+}
+
+AddressForm.defaultProps = {
+  formValues: {
+    default: true
+  }
 }

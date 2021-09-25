@@ -28,7 +28,7 @@ export default function ChangePicture (props) {
     setPreview({
       image: file.url || file.preview,
       visible: true,
-      title: file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
+      title: file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
     })
   }
   useEffect(() => {
