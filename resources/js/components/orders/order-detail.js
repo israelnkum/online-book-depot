@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { Drawer, Button, Row, Col, Card, List, Avatar, Typography } from 'antd'
 import { connect } from 'react-redux'
-import { handleGetOrderDetail } from '../../actions/orders/OrderActions'
 import PropTypes from 'prop-types'
 
 const OrderDetail = (props) => {
-  const { orderDetail, orderId } = props
+  const { orderDetail } = props
   const [visible, setVisible] = useState(false)
   const showDrawer = () => {
     setVisible(true)

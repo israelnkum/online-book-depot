@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ItemResource;
+use App\Http\Resources\ItemSearchResource;
 use App\Http\Resources\TagResource;
 use App\Http\Resources\LandingItemResource;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
 {
@@ -45,7 +47,19 @@ class LandingPageController extends Controller
     }
 
     public function getItemByTags(){
-//        return Tag::first()->items;
         return response()->json(TagResource::collection(Tag::all()));
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchItems(Request $request): JsonResponse
+    {
+        $items = Item::query()
+            ->where('name','like', '%' . $request['query'] . '%')
+            ->get();
+
+            return response()->json(ItemSearchResource::collection($items));
     }
 }

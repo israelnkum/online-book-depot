@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\HelperFunctions;
 use App\Http\Resources\AllOrdersResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Item;
@@ -33,8 +34,9 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
-            $prefix = "OSS-";
-            $id = IdGenerator::generate(['table' => 'oss_orders', 'length' => 10, 'prefix' => $prefix]);
+//            $prefix = "OSS-";
+//            $id = IdGenerator::generate(['table' => 'oss_orders', 'length' => 10, 'prefix' => $prefix]);
+            $id = HelperFunctions::generateFolderNumber();
             $order = Order::create([
                 'customerId' => Auth::user()->id,
                 'pickupLocationId' => $request->pickupLocationId,

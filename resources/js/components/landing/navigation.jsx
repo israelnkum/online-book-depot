@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Col, Input, Menu, Row, Space, Typography, Badge, Avatar } from 'antd'
+import { Layout, Col, Menu, Row, Space, Typography, Badge, Avatar } from 'antd'
 import PropTypes from 'prop-types'
 import {
   MenuOutlined,
@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import CustomSearch from '../commons/custom-search'
 const { Header } = Layout
 
 const Navigation = (props) => {
@@ -29,8 +30,8 @@ const Navigation = (props) => {
                             <MenuOutlined />
                         </Space>
                     } theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
-                        <Menu.Item key={'in'} >
-                            <Input.Search style={{ verticalAlign: 'middle' }} placeholder={'Search'}/>
+                        <Menu.Item style={{ width: 300, textTransform: 'capitalize' }} key={'search'}>
+                            <CustomSearch/>
                         </Menu.Item>
                         <Menu.Item onClick={() => { window.location.href = '/' }} key={'Home'} icon={<HomeOutlined />}>Home</Menu.Item>
                         <Menu.Item key={'Shop'} icon={<ShoppingOutlined />}>

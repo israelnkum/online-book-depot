@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::prefix('landing')->group(function () {
     Route::get('/items', [LandingPageController::class, 'getAllItems']);
+    Route::get('search/items/{query}', [LandingPageController::class, 'searchItems']);
     Route::get('tag/items', [LandingPageController::class, 'getItemByTags']);
     Route::get('/categories', [LandingPageController::class, 'getAllCategories']);
     Route::prefix('/category')->group(function () {

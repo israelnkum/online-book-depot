@@ -61,21 +61,21 @@ const ItemDetail = (props) => {
   }
   return (
         <React.Fragment>
-            <CategoryBanner heroText={name} >
-                <Spin spinning={loadItemDetail}>
-                    {
-                        loadItemDetail === false &&
+            <Spin spinning={loadItemDetail}>
+                {
+                    loadItemDetail === false &&
+                    <CategoryBanner heroText={itemDetail.category.name} >
                         <CategoryBreadcrumb>
                             <Breadcrumb.Item>
-                                <CategoryLink name={name} id={itemDetail.categoryId}>{name}</CategoryLink>
+                                <CategoryLink name={itemDetail.category.name} id={itemDetail.categoryId}>{itemDetail.category.name}</CategoryLink>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
                                 {itemDetail.name}
                             </Breadcrumb.Item>
                         </CategoryBreadcrumb>
-                    }
-                </Spin>
-            </CategoryBanner>
+                    </CategoryBanner>
+                }
+            </Spin>
             <Row style={{ marginTop: 25 }} justify={'center'} align={'top'} gutter={[15, 15]}>
                 <Col span={16} xs={24} sm={24} md={16}>
                     <Spin spinning={loadItemDetail} tip={'Please wait...'}>
@@ -105,27 +105,27 @@ const ItemDetail = (props) => {
                                             </Space>
                                             <Spin spinning={addingToCart} tip={'Adding'}>
                                                 <Input.Group compact>
-                                                {
-                                                    alreadyInCart === undefined
-                                                      ? <>
-                                                            <Button style={{ width: '50%' }}
-                                                                    onClick={() => { addItemToCart() }}
-                                                                    type={'primary'} className={'primary'}>
-                                                                <ShoppingCartOutlined /> Add to Cart
-                                                            </Button>
-                                                        </>
-                                                      : <>
-                                                            <Button onClick={() => { updateItemInCart({ itemId: itemDetail.id, qty: -1 }) }} type={'primary'} className={'primary'}>
-                                                                <MinusOutlined/>
-                                                            </Button>
-                                                            <Button
+                                                    {
+                                                        alreadyInCart === undefined
+                                                          ? <>
+                                                                <Button style={{ width: '50%' }}
+                                                                        onClick={() => { addItemToCart() }}
+                                                                        type={'primary'} className={'primary'}>
+                                                                    <ShoppingCartOutlined /> Add to Cart
+                                                                </Button>
+                                                            </>
+                                                          : <>
+                                                                <Button onClick={() => { updateItemInCart({ itemId: itemDetail.id, qty: -1 }) }} type={'primary'} className={'primary'}>
+                                                                    <MinusOutlined/>
+                                                                </Button>
+                                                                <Button
                                                                     onClick={() => { updateItemInCart({ itemId: itemDetail.id, qty: 1 }) }}
                                                                     type={'primary'} className={'primary'}>
-                                                                <PlusOutlined />
-                                                            </Button> <br/>
-                                                            <Typography.Text className={'text-primary'}>{alreadyInCart.qty} (items) in cart</Typography.Text>
-                                                        </>
-                                                }
+                                                                    <PlusOutlined />
+                                                                </Button> <br/>
+                                                                <Typography.Text className={'text-primary'}>{alreadyInCart.qty} (items) in cart</Typography.Text>
+                                                            </>
+                                                    }
                                                 </Input.Group>
                                             </Spin>
                                         </Col>

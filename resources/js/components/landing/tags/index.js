@@ -15,46 +15,47 @@ const Tags = (props) => {
     })
   }, [])
   return (
-     <Spin spinning={loading}>
-         <Card>
-             <Row align={'stretch'} gutter={[10, 10]}>
-                 {
-                     tagItems.map((tag) => (
-                       tag.items.length > 0 &&
-                         <>
-                             <Col span={24} sm={24} xl={24} lg={24} xxl={24}>
+        <Spin spinning={loading}>
+            <Card>
+                <Row align={'stretch'} gutter={[10, 10]}>
+                    {
+                        tagItems.map((tag) => (
+                          tag.items.length > 0 &&
+                             <Col key={tag.id} span={24} sm={24} xl={24} lg={24} xxl={24}>
                                  <div align={'left'} style={{ marginTop: 20, marginBottom: 20 }}>
                                      <Typography.Text className={'sectionTitle'}>
                                          {tag.name}
                                      </Typography.Text>
                                  </div>
+
+                                 <Row gutter={[10, 10]}>
+                                     {
+                                         tag.items.map((item) => (
+                                             <Col key={item.id} xs={20} sm={4} lg={4} md={4} xl={4} xxl={3}>
+                                                 <ItemLink categoryName={item.category.name} itemName={item.name} itemId={item.id}>
+                                                     <Card
+                                                         hoverable
+                                                         cover={<ImgComponent alt={item.name} path={`/storage/images/items/${item.file || 'default-book.png'}`}/>}
+                                                     >
+                                                         <Card.Meta description={
+                                                             <Space>
+                                                                 <Typography.Text disabled={item.discountedPrice > 0} delete={item.discountedPrice > 0}>{`GHC ${item.sellingPrice}`}</Typography.Text>
+                                                                 {item.discountedPrice > 0 && <Typography.Text>{`GHC ${item.discountedPrice}`}</Typography.Text> }
+                                                             </Space>
+                                                         } />
+                                                         <span>{item.name}</span>
+                                                     </Card>
+                                                 </ItemLink>
+                                             </Col>
+                                         ))
+                                     }
+                                 </Row>
                              </Col>
-                             {
-                                 tag.items.map((item) => (
-                                     <Col key={item.id} xs={20} sm={4} lg={4} md={4} xl={4} xxl={3}>
-                                         <ItemLink categoryName={item.category.name} itemName={item.name} itemId={item.id}>
-                                             <Card
-                                                 hoverable
-                                                 cover={<ImgComponent alt={item.name} path={`/storage/images/items/${item.file || 'default-book.png'}`}/>}
-                                             >
-                                                 <Card.Meta description={
-                                                     <Space>
-                                                         <Typography.Text disabled={item.discountedPrice > 0} delete={item.discountedPrice > 0}>{`GHC ${item.sellingPrice}`}</Typography.Text>
-                                                         {item.discountedPrice > 0 && <Typography.Text>{`GHC ${item.discountedPrice}`}</Typography.Text> }
-                                                     </Space>
-                                                 } />
-                                                 <span>{item.name}</span>
-                                             </Card>
-                                         </ItemLink>
-                                     </Col>
-                                 ))
-                             }
-                         </>
-                     ))
-                 }
-             </Row>
-         </Card>
-     </Spin>
+                        ))
+                    }
+                </Row>
+            </Card>
+        </Spin>
   )
 }
 

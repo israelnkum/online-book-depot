@@ -3,6 +3,7 @@ import BannerAnim, { Element } from 'rc-banner-anim'
 import TweenOne from 'rc-tween-one'
 import 'rc-banner-anim/assets/index.css'
 import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 const BgElement = Element.BgElement
 export default function Banner () {
   const imgArray = [
@@ -32,10 +33,11 @@ export default function Banner () {
                                 Online <br/>
                                 Stationery Shop
                             </TweenOne>
-                            <TweenOne className="banner-user-text"
-                                      animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
+                            <TweenOne className="banner-user-text" animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
                             >
-                                <Button size={'large'} type={'default'} shape={'round'}>Shop Now</Button>
+                                <Link style={{ color: '#f56a00' }} to={'/landing/shop'}>
+                                    <Button size={'large'} type={'default'} shape={'round'}>Shop Now</Button>
+                                </Link>
                             </TweenOne>
                         </Element>
                   )
