@@ -11,7 +11,7 @@ import CategoryLink from '../categories/category-link'
 import OtherCategories from '../categories/other-categories'
 import { ShoppingCartOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import { handleAddItemToCart, handleUpdateCart } from '../../../actions/cart/CartActions'
-
+import DefaultImage from '../../../default.png'
 const ItemDetail = (props) => {
   const { itemDetail, handleAddItemToCart, handleUpdateCart, alreadyInCart } = props
   const [addingToCart, setAddingToCart] = useState(false)
@@ -85,7 +85,7 @@ const ItemDetail = (props) => {
                                 <Card style={{ marginBottom: 10 }}>
                                     <Row justify={'center'} align={'middle'} gutter={[15, 15]}>
                                         <Col span={8} sm={24} xs={24} md={8}>
-                                            <Image alt={itemDetail.name} src={`/storage/images/items/${itemDetail.file || 'default-book.png'}`}/>
+                                            <Image alt={itemDetail.name} src={ itemDetail.file ? `/storage/images/items/${itemDetail.file}` : DefaultImage}/>
                                         </Col>
                                         <Col span={16} sm={24} xs={24} md={16}>
                                             <div>

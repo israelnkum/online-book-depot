@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { Button, message, Select, Space, Spin, Table, Tag, Popconfirm, Typography } from 'antd'
 import { handleRemoveFromCart, handleUpdateCart } from '../../../actions/cart/CartActions'
 import { connect } from 'react-redux'
+import DefaultImage from '../../../default.png'
+
 const CartItem = (props) => {
   const { handleUpdateCart, handleRemove } = props
   const [adding, setAddingToCart] = useState(false)
@@ -31,7 +33,9 @@ const CartItem = (props) => {
               <Column
                   title="Image"
                   render={(text, record) => (
-                      <img height={'auto'} width={80} src={`/storage/images/items/${record.item.image || 'default-book.png'}`} alt={record.item.name}/>
+                      <img height={'auto'} width={80}
+                           src={record.item.image ? `/storage/images/items/${record.item.image}` : DefaultImage}
+                           alt={record.item.name}/>
                   )}
               />
 

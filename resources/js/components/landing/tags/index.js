@@ -35,7 +35,7 @@ const Tags = (props) => {
                                                  <ItemLink categoryName={item.category.name} itemName={item.name} itemId={item.id}>
                                                      <Card
                                                          hoverable
-                                                         cover={<ImgComponent alt={item.name} path={`/storage/images/items/${item.file || 'default-book.png'}`}/>}
+                                                         cover={<ImgComponent alt={item.name} path={item.file ? `/storage/images/items/${item.file}` : 'default.png'}/>}
                                                      >
                                                          <Card.Meta description={
                                                              <Space>

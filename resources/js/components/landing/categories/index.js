@@ -31,7 +31,7 @@ export default function Categories () {
                           <Col key={category.id} xs={20} sm={4} lg={4} md={4} xl={4} xxl={3}>
                               <CategoryLink name={category.name} id={category.id}>
                                   <Card hoverable
-                                        cover={<ImgComponent alt={category.name} path={`/storage/images/categories/${category.file || 'default-category.jpeg'}`}/>}>
+                                        cover={<ImgComponent alt={category.name} path={category.file ? `/storage/images/categories/${category.file}` : 'default.png'}/>}>
                                       <Meta title={category.name} />
                                   </Card>
                               </CategoryLink>

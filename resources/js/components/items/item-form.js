@@ -38,16 +38,14 @@ function ItemForm (props) {
       if (Object.prototype.hasOwnProperty.call(values, key)) { formData.append(key, values[key]) }
     }
 
-    values.id === '0'
-      ? addItem(formData)
-      : editItem(values).then(() => {
-        message.success('Item ' + (values.id === '0' ? 'Added' : 'Updated'))
-        form.resetFields()
-        onClose(false)
-      }).catch((error) => {
-        console.log(error)
-        message.warning(error.response)
-      })
+    (values.id === '0' ? addItem(formData) : editItem(values)).then(() => {
+      setVisible(false)
+      message.success('Item ' + (values.id === '0' ? 'Added' : 'Updated'))
+      form.resetFields()
+    }).catch((error) => {
+      console.log(error)
+      message.warning(error.response)
+    })
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -122,7 +120,7 @@ function ItemForm (props) {
                         </Col>
                         <Col span={24} xs={24} sm={24} lg={24}>
                             <Form.Item
-                                label="ItemName"
+                                label="Item Name"
                                 name="name"
                                 rules={[
                                   {

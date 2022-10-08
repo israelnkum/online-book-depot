@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,12 +16,22 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tags')->insert([
-            [ 'id' => (string) Str::uuid(),'name' => 'New Arrival'],
-            [ 'id' => (string) Str::uuid(),'name' => 'Best Seller'],
-            [ 'id' => (string) Str::uuid(),'name' => 'Top Rating'],
-            [ 'id' => (string) Str::uuid(),'name' => 'Featured'],
-            [ 'id' => (string) Str::uuid(),'name' => 'Trending'],
-        ]);
+
+        $tags = [
+            'New Arrival',
+            'Best Seller',
+            'Top Rating',
+            'Featured',
+            'Trending'
+        ];
+
+        foreach ($tags as $tag){
+            Tag::firstOrCreate([
+                'name' => $tag
+            ], [
+                'id' => (string) Str::uuid(),
+                'name' => $tag
+            ]);
+        }
     }
 }

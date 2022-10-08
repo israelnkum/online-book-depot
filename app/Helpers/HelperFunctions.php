@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Http;
 
 class HelperFunctions
 {
-    static function saveImage(Request $request, $directory): string
+    public static function saveImage(Request $request, $directory): string
     {
-        $image_name = uniqid().'.'. $request->file('file')->getClientOriginalExtension();
-        $request->file('file')->storeAs(env('APP_PHOTO_PATH').'/'.$directory.'/', $image_name);
+        $file = $request->file('file');
+        $image_name = uniqid('', true).'.'. $file->getClientOriginalExtension();
+        $file->storeAs(getenv('APP_PHOTO_PATH').'/'.$directory.'/', $image_name);
         return $image_name;
     }
 

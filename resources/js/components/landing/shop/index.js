@@ -32,7 +32,7 @@ const Shop = (props) => {
                                                         <ItemLink categoryName={item.name} itemName={item.name} itemId={item.id}>
                                                             <Card
                                                                 hoverable
-                                                                cover={<ImgComponent alt={item.name} path={`/storage/images/items/${item.file || 'default-book.png'}`}/>}>
+                                                                cover={<ImgComponent alt={item.name} path={item.file ? `/storage/images/items/${item.file}` : 'default.png'}/>}>
                                                                 <Card.Meta description={
                                                                     <Space>
                                                                         <Typography.Text disabled={item.discountedPrice > 0} delete={item.discountedPrice > 0}>{`GHC ${item.sellingPrice}`}</Typography.Text>

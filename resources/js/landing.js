@@ -4,23 +4,23 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom'
 import React from 'react'
-require('./bootstrap');
 
 /**
  * Next, we will create a fresh React component instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import Landing from "./components/landing";
-import {BrowserRouter as Router} from "react-router-dom";
-import {PersistGate} from "redux-persist/integration/react";
-import {Provider} from "react-redux";
-import {Store, persistor} from "./utils/store";
+import Landing from './components/landing'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import { Store, persistor } from './utils/store'
+require('./bootstrap')
 
 if (document.getElementById('lading-page')) {
-    ReactDOM.render(
+  ReactDOM.render(
         <Provider store={Store}>
             <PersistGate persistor={persistor}>
                 <Router>
@@ -29,5 +29,5 @@ if (document.getElementById('lading-page')) {
             </PersistGate>
         </Provider>,
         document.getElementById('lading-page')
-    )
+  )
 }
