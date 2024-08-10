@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\HelperFunctions as Helper;
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\ShopResource;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,6 +16,7 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +25,34 @@ class CategoryController extends Controller
     public function index()
     {
         return response()->json(CategoryResource::collection(Category::all()));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function store(Request $request): Response
+    {
+        if (Category::query()->where('name', $request->name)->exists()) {
+            return response('Category name already exist', 422);
+        }
+        DB::beginTransaction();
+        try {
+            $category = Category::query()->create($request->all());
+            if ($request->has('file') && $request->file != "null") {
+                $image_name = Helper::saveImage($request, 'categories');
+                $category->photo()->updateOrCreate([
+                    'photoUrl' => $image_name
+                ]);
+            }
+            DB::commit();
+            return \response(new CategoryResource($category));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return \response('Something went wrong', 422);
+        }
     }
 
     /**
@@ -38,37 +66,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request): Response
-    {
-        if (Category::query()->where('name', $request->name)->exists()) {
-            return response('Category name already exist',422);
-        }
-        DB::beginTransaction();
-        try {
-            $category = Category::query()->create($request->all());
-            if ($request->has('file') && $request->file != "null"){
-                $image_name = Helper::saveImage($request, 'categories');
-                $category->photo()->updateOrCreate([
-                    'photoUrl'=> $image_name
-                ]);
-            }
-            DB::commit();
-            return \response(new CategoryResource($category));
-        }catch (\Exception $exception){
-            DB::rollBack();
-            return \response('Something went wrong', 422);
-        }
-    }
-
-    /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -79,7 +79,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -91,28 +91,30 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  string  $id
+     * @param string $id
      * @return Response
      */
     public function update(Request $request, string $id): Response
     {
         DB::beginTransaction();
-        try
-        {
+        try {
             $category = Category::query()->find($id);
             $category->update($request->all());
-            if ($request->has('file') && $request->file != "null"){
+            if ($request->has('file') && $request->file != "null") {
                 $image_name = Helper::saveImage($request, 'categories');
                 $category->photo()->updateOrCreate([
-                    'photoUrl'=> $image_name
-                ]);
+                    'photoable_id' => $category->id
+                ],
+                    [
+                        'photoUrl' => $image_name
+                    ]);
             }
             DB::commit();
 
             $category = Category::query()->find($id);
-            return \response(new ShopResource($category));
+            return \response(new CategoryResource($category));
 
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             DB::rollBack();
             return response('Something went wrong', 422);
         }
@@ -131,9 +133,9 @@ class CategoryController extends Controller
             Category::query()->find($id)->delete();
             DB::commit();
             return \response(new CategoryResource(Category::withTrashed()->find($id)));
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             DB::rollBack();
-            return response('Something went wrong',422);
+            return response('Something went wrong', 422);
         }
     }
 }

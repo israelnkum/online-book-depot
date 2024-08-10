@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 const BgElement = Element.BgElement
 export default function Banner () {
   const imgArray = [
-    'slider1.jpg',
-    'slider2.jpg',
-    'slider3.jpg'
+    'slider-1.jpg',
+    'slider-2.jpg',
+    'slider-3.jpg'
   ]
   return (
         <BannerAnim prefixCls="banner-user">
@@ -24,7 +24,7 @@ export default function Banner () {
                                 key="bg"
                                 className="bg"
                                 style={{
-                                  backgroundImage: `url(/storage/assets/slider/${img})`,
+                                  backgroundImage: `url(/images/slider/${img})`,
                                   backgroundSize: 'cover',
                                   backgroundPosition: 'center'
                                 }}

@@ -15,7 +15,7 @@ export default function CategoryBanner (props) {
                         key="bg"
                         className="bg"
                         style={{
-                          backgroundImage: 'url(/storage/assets/slider/slider1.jpg)',
+                          backgroundImage: 'url(/images/slider/slider-1.jpg)',
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                           height: 300

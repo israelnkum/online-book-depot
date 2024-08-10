@@ -20,7 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         .login-body {
-            background: url('{{asset('/storage/assets/login-bg.jpg ')}}') center center no-repeat;
+            background: url('{{asset('/images/login-bg.jpg ')}}') center center no-repeat;
             background-size: cover;
         }
     </style>

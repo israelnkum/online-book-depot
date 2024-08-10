@@ -25,15 +25,30 @@ class ItemFactory extends Factory
      */
     public function definition()
     {
+        $categories = [
+            "Paperclips",
+            "Pencils",
+            "Staplers",
+            "Pens",
+            "Envelopes",
+            "Toners",
+            "Notebooks",
+            "Desk Accessories"
+        ];
+
+        $brands = [
+            "Papier", "Faber-Castell", "Rifle Paper", "Smythson", "Kokuyo", "Sugar Paper"
+        ];
+
         $cost  = $this->faker->numberBetween(20, 600);
         $selling  = $this->faker->numberBetween($cost, 600);
         return [
             'brandId' => Brand::firstOrCreate([
-                'name'=>'First Brand'
+                'name'=> $this->faker->randomElement($brands)
             ])->id,
             'shopId' => Shop::first()->id,
             'categoryId' => Category::firstOrCreate([
-                'name'=>'First Brand'
+                'name'=> $this->faker->randomElement($categories)
             ])->id,
             'userId' => User::first()->id,
             'name' => $this->faker->realText(50),
