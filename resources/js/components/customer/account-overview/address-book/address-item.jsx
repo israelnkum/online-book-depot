@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { List, Tag, Space } from 'antd'
-import { EditOutlined } from '@ant-design/icons'
-import { AddressForm } from './address-form'
 
 export const AddressItem = (props) => {
   const { addressObj, action } = props
   return (
-      <List.Item>
+    addressObj
+      ? <List.Item>
           <List.Item.Meta
               title={addressObj.name}
               description={
@@ -23,10 +22,11 @@ export const AddressItem = (props) => {
               {action}
           </Space>
       </List.Item>
+      : <>-</>
   )
 }
 
 AddressItem.propTypes = {
-  addressObj: PropTypes.object.isRequired,
+  addressObj: PropTypes.object,
   action: PropTypes.node
 }

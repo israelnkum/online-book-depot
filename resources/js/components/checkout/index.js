@@ -75,21 +75,25 @@ const Checkout = (props) => {
         <div style={{ marginBottom: 50 }}>
             <PopUp title={'Delivery Address'} showModal={showPopUp} setShowModal={() => { setShowPopUp(!showPopUp) }}>
                 <Spin spinning={fetching}>
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={addressBook}
-                        renderItem={item => (
-                            <AddressItem addressObj={item}
-                                         action={
-                                             item.id === selectedAddress.id
-                                               ? <Tag color={'blue'}>SELECTED</Tag>
-                                               : <Button onClick={() => {
-                                                 handleSelectedAddress(item)
-                                               }} size={'small'}>Choose</Button>
-                                         }
+                    {
+                        addressBook && addressBook.length > 0
+                          ? <List
+                                itemLayout="horizontal"
+                                dataSource={addressBook}
+                                renderItem={item => (
+                                    <AddressItem addressObj={item}
+                                                 action={
+                                                     item.id === selectedAddress.id
+                                                       ? <Tag color={'blue'}>SELECTED</Tag>
+                                                       : <Button onClick={() => {
+                                                         handleSelectedAddress(item)
+                                                       }} size={'small'}>Choose</Button>
+                                                 }
+                                    />
+                                )}
                             />
-                        )}
-                    />
+                          : <>Go To your account and add address book</>
+                    }
                 </Spin>
             </PopUp>
             <Row style={{ marginTop: 25 }} justify={'center'} align={'top'} gutter={[15, 15]}>
@@ -104,7 +108,7 @@ const Checkout = (props) => {
                         }/>
                     </Card>
                     <SelectPickupLocation
-                        addressId={selectedAddress.id}
+                        addressId={selectedAddress?.id}
                         selectedPickupLocation={selectedPickupLocation}
                         handleSelectPickupLocation={handleSelectPickupLocation}
                     />

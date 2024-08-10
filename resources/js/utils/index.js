@@ -1,5 +1,3 @@
-import { handleUpdateOrderStatus } from '../actions/payment/PaymentActions'
-import api from './api'
 export const regions = [
   'Ahafo',
   'Ashanti',

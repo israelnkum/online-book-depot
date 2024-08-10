@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use function response;
 
 class OrderController extends Controller
@@ -32,11 +33,11 @@ class OrderController extends Controller
 
     public function createOrder(Request $request)
     {
+
         DB::beginTransaction();
         try {
-//            $prefix = "OSS-";
-//            $id = IdGenerator::generate(['table' => 'oss_orders', 'length' => 10, 'prefix' => $prefix]);
             $id = HelperFunctions::generateFolderNumber();
+            Log::info('here', [$id]);
             $order = Order::create([
                 'customerId' => Auth::user()->id,
                 'pickupLocationId' => $request->pickupLocationId,
@@ -59,7 +60,9 @@ class OrderController extends Controller
             return response(new OrderResource($order));
         }catch (Exception $exception){
             DB::rollBack();
-            return response($exception);
+            return response()->json([
+                "message" => $exception->getMessage()
+            ]);
         }
     }
 

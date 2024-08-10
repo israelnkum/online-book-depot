@@ -30,16 +30,6 @@ class AddressBookController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
@@ -53,6 +43,9 @@ class AddressBookController extends Controller
         DB::beginTransaction();
         try {
             $user = User::query()->find($request->userId);
+            if ($user->addressBooks()->count() == 0) {
+                $request['default'] = true;
+            }
             $user->addressBooks()->create($request->all());
             $address = $user->addressBooks()->latest()->first();
             DB::commit();

@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class HelperFunctions
 {
@@ -36,13 +37,26 @@ class HelperFunctions
             ->post(env('MIX_REACT_APP_PAYMENT_PATH').'/payments', $data);
     }
 
-    public static function generateFolderNumber(){
-        $lastRecord = Order::withTrashed()->latest('id')->first()['orderNumber'];
-        if ($lastRecord == '' ){
+    public static function generateFolderNumber() {
+        $lastRecord = Order::withTrashed()->latest('id')->first();
+
+        if ($lastRecord == '') {
             $orderNumber = 'OSS-000001';
-        }else{
-            $orderNumber =  $lastRecord +1;
+        } else {
+            // Extract the numeric part from the last order number
+            $lastNumber = intval(substr($lastRecord->orderNumber, 4));
+
+            // Increment the number
+            $newNumber = $lastNumber + 1;
+
+            // Format the number with leading zeros (ensures 6 digits)
+            $formattedNumber = str_pad($newNumber, 6, '0', STR_PAD_LEFT);
+
+            // Concatenate the prefix with the formatted number
+            $orderNumber = 'OSS-' . $formattedNumber;
         }
+
         return $orderNumber;
     }
+
 }
