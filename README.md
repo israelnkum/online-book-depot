@@ -9,6 +9,18 @@ We provide IT training under a broad category of Professional courses.
 Email: info@techlineafrica.com  
 Mobile: +233 544 513 074
 
+## Required PHP modules
+- BCMath
+- Mbstring
+- XML
+- PDO
+- GD
+- Intl
+- zip
+- OpenSSL
+## PHP dependency manager
+- Composer
+
 ## Project Setup
 ### Frontend Setup
 > _node version: 14.*_
